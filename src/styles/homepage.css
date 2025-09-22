@@ -104,6 +104,7 @@ nav .auth .signup:hover {
 .hero-gradient {
     background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
     color: white;
+    padding: 1rem 0;
 }
 
 .hero-gradient .container {
@@ -132,7 +133,7 @@ nav .auth .signup:hover {
 }
 
 .hero-gradient p {
-    margin-top: -2rem;
+    margin-top: 0rem;
     max-width: 32rem;
     margin-left: auto;
     margin-right: auto;
@@ -209,6 +210,7 @@ nav .auth .signup:hover {
     gap: 2.5rem;
 }
 
+
 @media (min-width: 768px) {
     .features .grid {
         grid-template-columns: repeat(2, 1fr);
@@ -244,7 +246,7 @@ nav .auth .signup:hover {
 }
 
 .features .item p {
-    margin-top: 0.5rem;
+    /* margin-top: 0.5rem; */
     font-size: 1rem;
     color: #6b7280;
 }

@@ -37,7 +37,7 @@ export default function SignupPage() {
                             <h2>Create your account</h2>
                             <p>
                                 Or{" "}
-                                <Link to="#" className="login-link">
+                                <Link to="/auth/login" className="login-link">
                                     login to existing account
                                 </Link>
                             </p>

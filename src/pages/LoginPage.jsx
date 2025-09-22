@@ -116,14 +116,14 @@ function LoginPage() {
                     </div>
 
                     <div className="social-grid">
-                        <Link href="#" className="social-btn" aria-label="Continue with Facebook">
-                            <i data-feather="facebook"></i>
+                        <Link to="#" className="social-btn" >
+                            <i data-feather="facebook" style={{ stroke: '#2563eb' }} ></i>
                         </Link>
-                        <Link href="#" className="social-btn" aria-label="Continue with Twitter">
-                            <i data-feather="twitter"></i>
+                        <Link to="#" className="social-btn" >
+                            <i data-feather="twitter" style={{ stroke: '#60a5fa' }}></i>
                         </Link>
-                        <Link href="#" className="social-btn" aria-label="Continue with GitHub">
-                            <i data-feather="github"></i>
+                        <Link to="#" className="social-btn" >
+                            <i data-feather="github" style={{ stroke: 'black' }} ></i>
                         </Link>
                     </div>
                 </div>
