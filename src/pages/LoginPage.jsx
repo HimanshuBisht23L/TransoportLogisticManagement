@@ -53,7 +53,7 @@ function LoginPage() {
                     </div>
 
                     <form className="auth-form" onSubmit={handleSubmit}>
-                        <fieldset className="form-group">
+                        <fieldset className="login-form-group">
                             <div className="input-wrapper">
                                 <span className="input-icon" aria-hidden="true">
                                     <i data-feather="mail"></i>

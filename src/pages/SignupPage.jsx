@@ -72,15 +72,10 @@ export default function SignupPage() {
                                         <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm Password" required />
                                     </div>
                                 </div>
-
                                 <div className="input-field">
                                     <div className="input-wrapper">
-                                        <i data-feather='users' className="icon" ></i>
-                                        <select id="account-type" name="account-type" required>
-                                            <option value="">Select Account Type</option>
-                                            <option value="user">Transport User</option>
-                                            <option value="admin">Transport Admin</option>
-                                        </select>
+                                        <i data-feather='phone' className="icon" ></i>
+                                        <input id="phone" name="phone" type="tel" placeholder="Phone Number" required />
                                     </div>
                                 </div>
                             </div>
