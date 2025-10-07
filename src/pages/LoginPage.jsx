@@ -1,20 +1,52 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import feather from 'feather-icons';
 import '../styles/loginpage.css'
+import axios from 'axios';
 
 function LoginPage() {
+
+    useEffect(()=>{
+        document.title = "Login - LogiTrack"
+    },[])
+
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [remember, setRemember] = useState(false)
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post("http://localhost:3000/user/login", {
+                email: email,
+                password: password,
+                remember: remember
+            }, { withCredentials: true });
+
+
+            if (res.data.success) {
+                console.log(res.data);
+                setEmail("");
+                setPassword("");
+                navigate("/");
+            }
+            else {
+                setEmail("");
+                setPassword("");
+                console.log(res.data.message);
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
     useEffect(() => {
         feather.replace();
     });
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("submit");
-    };
-
 
     return (
         <div className="auth-page">
@@ -63,9 +95,11 @@ function LoginPage() {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
-                                    required
                                     placeholder="Email address"
                                     className="input"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div className="input-wrapper">
@@ -77,9 +111,11 @@ function LoginPage() {
                                     name="password"
                                     type="password"
                                     autoComplete="current-password"
-                                    required
                                     placeholder="Password"
                                     className="input"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
                                 />
                             </div>
                         </fieldset>
@@ -90,6 +126,8 @@ function LoginPage() {
                                     id="remember-me"
                                     name="remember"
                                     type="checkbox"
+                                    checked={remember}
+                                    onChange={(e) => setRemember(e.target.checked)}
                                 />
                                 <span>Remember me</span>
                             </label>

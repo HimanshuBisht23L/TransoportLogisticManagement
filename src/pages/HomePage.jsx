@@ -4,6 +4,7 @@ import 'aos/dist/aos.css';
 import feather from 'feather-icons';
 import "../styles/homepage.css";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function HomePage() {
 
@@ -11,6 +12,20 @@ function HomePage() {
         AOS.init({ duration: 500, once: false });
         feather.replace();
     }, []);
+
+    const logout = async () => {
+        try {
+            const res = await axios.post("http://localhost:3000/user/logout", {}, { withCredentials: true });
+            if (res.data.success) {
+                console.log(res.data.message);
+            }
+            else {
+                console.log(res.data.message);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <>
@@ -46,7 +61,8 @@ function HomePage() {
                         <p>Efficiently manage your transportation needs with our comprehensive logistics solution.</p>
 
                         <div className="actions">
-                            <Link to="/auth/signup" className="start">Get Started</Link>
+                            {/* <Link to="/auth/signup" className="start">Get Started</Link> */}
+                            <Link to="/" onClick={logout} className="start">Get Started</Link>
                             <Link to="/auth/login" className="login">Login</Link>
                         </div>
                     </div>

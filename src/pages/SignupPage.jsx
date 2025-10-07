@@ -1,9 +1,54 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../styles/signuppage.css'
 import feather from 'feather-icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function SignupPage() {
+
+    useEffect(()=>{
+        document.title = "Sign Up - LogiTrack"
+    },[])
+
+    const navigate = useNavigate();
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [number, setNumber] = useState()
+    const [role, setRole] = useState("")
+    const [password, setPassword] = useState("")
+    const [rePassword, setrePassword] = useState("")
+
+    const RegisterUser = async (e) => {
+        e.preventDefault();
+
+        if (password != rePassword) {
+            console.log("Password Doesn't Match!!");
+            setPassword("");
+            setrePassword("");
+            return;
+        }
+
+        try {
+            const res = await axios.post("http://localhost:3000/user/register", {
+                name: name,
+                email: email,
+                phone: number,
+                password: password,
+                role: role
+            }, { withCredentials: true });
+
+            if (res.data.success) {
+                console.log(res.data);
+                navigate("/auth/login");
+            }
+            else {
+                console.log(res.data.message)
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    }
 
     useEffect(() => {
         feather.replace();
@@ -43,39 +88,96 @@ export default function SignupPage() {
                             </p>
                         </div>
 
-                        <form className="signup-form">
+                        <form onSubmit={RegisterUser} className="signup-form">
                             <div className="input-group">
                                 <div className="input-field">
                                     <div className="input-wrapper">
                                         <i data-feather='user' className="icon" ></i>
-                                        <input id="full-name" name="full-name" type="text" placeholder="Full Name" required />
+                                        <input
+                                            id="full-name"
+                                            name="full-name"
+                                            type="text"
+                                            placeholder="Full Name"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="input-field">
                                     <div className="input-wrapper">
                                         <i data-feather='mail' className="icon" ></i>
-                                        <input id="email" name="email" type="email" placeholder="Email address" required />
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            placeholder="Email address"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="input-field">
                                     <div className="input-wrapper">
                                         <i data-feather='lock' className="icon" ></i>
-                                        <input id="password" name="password" type="password" placeholder="Password" required />
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            placeholder="Password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            required
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="input-field">
                                     <div className="input-wrapper">
                                         <i data-feather='lock' className="icon" ></i>
-                                        <input id="confirm-password" name="confirm-password" type="password" placeholder="Confirm Password" required />
+                                        <input
+                                            id="confirm-password"
+                                            name="confirm-password"
+                                            type="password"
+                                            placeholder="Confirm Password"
+                                            value={rePassword}
+                                            onChange={(e) => setrePassword(e.target.value)}
+                                            required
+                                        />
                                     </div>
                                 </div>
                                 <div className="input-field">
                                     <div className="input-wrapper">
                                         <i data-feather='phone' className="icon" ></i>
-                                        <input id="phone" name="phone" type="tel" placeholder="Phone Number" required />
+                                        <input
+                                            id="phone"
+                                            name="phone"
+                                            type="tel"
+                                            placeholder="Phone Number"
+                                            value={number}
+                                            onChange={(e) => setNumber(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="input-field">
+                                    <div className="input-wrapper">
+                                        <i data-feather="users" className='icon'></i>
+                                        <select
+                                            name="role"
+                                            id="role"
+                                            className='role-select'
+                                            value={role}
+                                            onChange={(e) => setRole(e.target.value)}
+                                            required
+                                        >
+                                            <option value="" disabled hidden>Select Role</option>
+                                            <option value="user">User</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +189,10 @@ export default function SignupPage() {
                                 </label>
                             </div>
 
-                            <button type="submit" className="submit-btn">
+                            <button
+                                type="submit"
+                                className="submit-btn"
+                            >
                                 <i data-feather='user-plus' className="btn-icon" ></i>
                                 Create Account
                             </button>
