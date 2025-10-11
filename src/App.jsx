@@ -5,7 +5,7 @@ import SignupPage from './pages/SignupPage.jsx'
 import UserDashboard from './pages/UserDashboard.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import './styles/App.css'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 
 const userContext = createContext();
@@ -68,7 +68,7 @@ function App() {
 
 
   // fetching user details if Logged In
-  const fetchuserdetail = async () => {
+  const fetchuserdetail = useCallback(async () => {
     try {
       const res = await axios.post("http://localhost:3000/user/isAuthenticated", {}, { withCredentials: true });
 
@@ -121,7 +121,7 @@ function App() {
     } catch (error) {
       console.log(error.message)
     }
-  }
+  }, []);
 
   useEffect(() => {
     fetchuserdetail();

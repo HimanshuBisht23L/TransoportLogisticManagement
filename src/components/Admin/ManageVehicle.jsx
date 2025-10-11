@@ -4,9 +4,8 @@ import "aos/dist/aos.css";
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import feather from "feather-icons";
-import { useNavigate } from 'react-router-dom';
 
-function ManageVehicle({ userData, ActiveTab }) {
+function ManageVehicle({ userData, ActiveTab, onEditVehicle, setConfirmDelete, setDeleteVehicle, refetchvehicle, setRefetchVehicle }) {
 
     const [ManageVehicleData, setManageVehicleData] = useState([]);
 
@@ -30,8 +29,8 @@ function ManageVehicle({ userData, ActiveTab }) {
 
     useEffect(() => {
         fetchvehicle();
-    }, [])
-
+        setRefetchVehicle(false);
+    }, [refetchvehicle === true])
 
     useEffect(() => {
         AOS.init({ duration: 500, once: false });
@@ -41,11 +40,6 @@ function ManageVehicle({ userData, ActiveTab }) {
     useEffect(() => {
         AOS.refresh();
     }, [ActiveTab]);
-
-
-    const EditVehicle = async () => {
-        navigare
-    }
 
     return (
         <>
@@ -59,6 +53,14 @@ function ManageVehicle({ userData, ActiveTab }) {
                         <i data-feather="refresh-cw" ></i> Refresh
                     </button>
                 </div>
+
+                {
+                    ManageVehicleData.length === 0 &&
+                    <div className='no-vehicle-added'>
+                        <p>You don't have added any vehicle yet.</p>
+                    </div>
+                }
+
                 {
                     ManageVehicleData.map((vehicle) => {
                         return (
@@ -93,10 +95,18 @@ function ManageVehicle({ userData, ActiveTab }) {
                                     </div>
                                     <div className='right-buttons'>
                                         <button
-                                            onClick={EditVehicle}
+                                            onClick={(e) => {
+                                                onEditVehicle(vehicle);
+                                            }}
                                             className="lt-edit-btn"
                                         >Edit</button>
-                                        <button className="lt-delete-btn">Delete</button>
+                                        <button
+                                            onClick={(e) => {
+                                                setDeleteVehicle(vehicle.id)
+                                                setConfirmDelete(true);
+                                            }}
+                                            className="lt-delete-btn"
+                                        >Delete</button>
                                     </div>
                                     <div className='id-date-box'>
                                         <p id='uid'><b>ID : </b>{vehicle.id}</p>
